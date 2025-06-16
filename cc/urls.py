@@ -6,10 +6,6 @@ from .views import (
     NoticiaViewSet, ContactoViewSet, SocioViewSet,
     JobApplicationViewSet
 )
-from rest_framework_simplejwt.views import (
-    TokenObtainPairView,
-    TokenRefreshView,
-)
 
 router = DefaultRouter()
 router.register(r'categorias', CategoriaViewSet)
@@ -25,7 +21,6 @@ router.register(r'job-applications', JobApplicationViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('api-auth/', include('rest_framework.urls')),  # Añade el login de Django Rest Framework
 ]
 
