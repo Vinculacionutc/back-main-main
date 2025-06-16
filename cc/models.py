@@ -166,7 +166,7 @@ class Socio(models.Model):
 
     def __str__(self):
         return f"{self.nombre} {self.apellido} - {self.empresa}"
-
+#
 class JobApplication(models.Model):
     nombre_completo = models.CharField(max_length=200, verbose_name="Nombre Completo")
     correo_electronico = models.EmailField(verbose_name="Correo Electrónico")
