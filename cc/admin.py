@@ -187,9 +187,15 @@ admin.site.register(RedSocial)
 
 @admin.register(JobApplication)
 class JobApplicationAdmin(admin.ModelAdmin):
-    list_display = ['nombre_completo', 'puesto_deseado', 'fecha_aplicacion']
+    list_display = ['nombre_completo', 'puesto_deseado', 'fecha_aplicacion', 'descargar_cv']
     list_filter = ['fecha_aplicacion', 'puesto_deseado']
     search_fields = ['nombre_completo', 'correo_electronico', 'puesto_deseado']
-    readonly_fields = ['fecha_aplicacion',]
+    readonly_fields = ['fecha_aplicacion', 'descargar_cv']
+    
+    def descargar_cv(self, obj):
+        if obj.cv:
+            return format_html('<a href="{}" target="_blank">Descargar CV</a>', obj.cv_download_url)
+        return "Sin CV"
+    descargar_cv.short_description = 'CV'
     
     

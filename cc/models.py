@@ -191,3 +191,10 @@ class JobApplication(models.Model):
             ext = self.cv.name.split('.')[-1].lower()
             if ext not in ['pdf', 'doc', 'docx']:
                 raise ValidationError('Solo se permiten archivos PDF o Word')
+    
+    @property
+    def cv_download_url(self):
+        if self.cv:
+            # Add fl_attachment to force download
+            return self.cv.url.replace('/upload/', '/upload/fl_attachment/')
+        return None
