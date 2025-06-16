@@ -74,6 +74,33 @@ class EmpresaAdmin(admin.ModelAdmin):
         }),
     )
 
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        if request.user.is_superuser:
+            return qs
+        try:
+            empresa_usuario = EmpresaUsuario.objects.get(usuario=request.user)
+            return qs.filter(id=empresa_usuario.empresa.id)
+        except EmpresaUsuario.DoesNotExist:
+            return qs.none()
+
+    def has_change_permission(self, request, obj=None):
+        if request.user.is_superuser:
+            return True
+        if obj is None:
+            return True
+        try:
+            empresa_usuario = EmpresaUsuario.objects.get(usuario=request.user)
+            return obj == empresa_usuario.empresa
+        except EmpresaUsuario.DoesNotExist:
+            return False
+
+    def has_delete_permission(self, request, obj=None):
+        return request.user.is_superuser
+
+    def has_add_permission(self, request):
+        return request.user.is_superuser
+
     def mostrar_logo(self, obj):
         if obj.logo:
             return format_html('<img src="{}" style="max-height: 50px;"/>', obj.logo.url)
@@ -98,6 +125,56 @@ class ProductoAdmin(admin.ModelAdmin):
             'fields': ('activo',)
         }),
     )
+
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        if request.user.is_superuser:
+            return qs
+        try:
+            empresa_usuario = EmpresaUsuario.objects.get(usuario=request.user)
+            return qs.filter(empresa=empresa_usuario.empresa)
+        except EmpresaUsuario.DoesNotExist:
+            return qs.none()
+
+    def has_change_permission(self, request, obj=None):
+        if request.user.is_superuser:
+            return True
+        if obj is None:
+            return True
+        try:
+            empresa_usuario = EmpresaUsuario.objects.get(usuario=request.user)
+            return obj.empresa == empresa_usuario.empresa
+        except EmpresaUsuario.DoesNotExist:
+            return False
+
+    def has_delete_permission(self, request, obj=None):
+        if request.user.is_superuser:
+            return True
+        if obj is None:
+            return True
+        try:
+            empresa_usuario = EmpresaUsuario.objects.get(usuario=request.user)
+            return obj.empresa == empresa_usuario.empresa
+        except EmpresaUsuario.DoesNotExist:
+            return False
+
+    def has_add_permission(self, request):
+        if request.user.is_superuser:
+            return True
+        try:
+            EmpresaUsuario.objects.get(usuario=request.user)
+            return True
+        except EmpresaUsuario.DoesNotExist:
+            return False
+
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if not request.user.is_superuser and db_field.name == "empresa":
+            try:
+                empresa_usuario = EmpresaUsuario.objects.get(usuario=request.user)
+                kwargs["queryset"] = Empresa.objects.filter(id=empresa_usuario.empresa.id)
+            except EmpresaUsuario.DoesNotExist:
+                kwargs["queryset"] = Empresa.objects.none()
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
     def mostrar_imagen(self, obj):
         if obj.imagen:
