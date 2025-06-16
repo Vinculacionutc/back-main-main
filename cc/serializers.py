@@ -1,6 +1,12 @@
 # serializers.py
 from rest_framework import serializers
-from .models import Categoria, Icono, RedSocial, CaracteristicaProducto, Producto, Empresa, EmpresaRedSocial, Servicio, Testimonio, Equipo, Noticia, MensajeContacto, Socio, JobApplication
+from django.contrib.auth.models import User
+from .models import (
+    Categoria, Icono, RedSocial, CaracteristicaProducto, 
+    Producto, Empresa, EmpresaRedSocial, Servicio, 
+    Testimonio, Equipo, Noticia, MensajeContacto, 
+    Socio, JobApplication, EmpresaUsuario
+)
 from cloudinary.models import CloudinaryField
 
 class CategoriaSerializer(serializers.ModelSerializer):
@@ -141,3 +147,35 @@ class JobApplicationSerializer(serializers.ModelSerializer):
         if ext not in ['pdf', 'doc', 'docx']:
             raise serializers.ValidationError('Solo se permiten archivos PDF o Word')
         return value
+
+class EmpresaUsuarioSerializer(serializers.ModelSerializer):
+    username = serializers.CharField(write_only=True)
+    password = serializers.CharField(write_only=True, style={'input_type': 'password'})
+    email = serializers.EmailField(write_only=True)
+    empresa_nombre = serializers.CharField(source='empresa.nombre', read_only=True)
+    usuario_email = serializers.CharField(source='usuario.email', read_only=True)
+
+    class Meta:
+        model = EmpresaUsuario
+        fields = ('id', 'username', 'password', 'email', 'empresa', 'empresa_nombre', 'usuario_email', 'fecha_asignacion')
+        read_only_fields = ('fecha_asignacion',)
+
+    def create(self, validated_data):
+        username = validated_data.pop('username')
+        password = validated_data.pop('password')
+        email = validated_data.pop('email')
+        
+        # Crear el usuario
+        user = User.objects.create_user(
+            username=username,
+            email=email,
+            password=password
+        )
+        
+        # Crear la relación EmpresaUsuario
+        empresa_usuario = EmpresaUsuario.objects.create(
+            usuario=user,
+            **validated_data
+        )
+        
+        return empresa_usuario

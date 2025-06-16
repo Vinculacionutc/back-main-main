@@ -10,6 +10,26 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import permissions
 
+class IsCompanyUserOrReadOnly(permissions.BasePermission):
+    def has_object_permission(self, request, view, obj):
+        if request.method in permissions.SAFE_METHODS:
+            return True
+        
+        # Verificar si el usuario está autenticado y tiene acceso a la empresa
+        if not request.user.is_authenticated:
+            return False
+            
+        try:
+            empresa_usuario = EmpresaUsuario.objects.get(usuario=request.user)
+            return obj.empresa == empresa_usuario.empresa
+        except EmpresaUsuario.DoesNotExist:
+            return False
+
+class EmpresaUsuarioViewSet(viewsets.ModelViewSet):
+    queryset = EmpresaUsuario.objects.all()
+    serializer_class = EmpresaUsuarioSerializer
+    permission_classes = [permissions.IsAdminUser]  # Solo los administradores pueden crear usuarios de empresa
+
 class CategoriaViewSet(viewsets.ModelViewSet):
     queryset = Categoria.objects.all()
     serializer_class = CategoriaSerializer
@@ -30,6 +50,17 @@ class ProductoViewSet(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend, filters.SearchFilter]
     filterset_fields = ['categoria', 'empresa']
     search_fields = ['nombre', 'descripcion']
+    permission_classes = [IsCompanyUserOrReadOnly]
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        if self.request.user.is_authenticated and not self.request.user.is_staff:
+            try:
+                empresa_usuario = EmpresaUsuario.objects.get(usuario=self.request.user)
+                return queryset.filter(empresa=empresa_usuario.empresa)
+            except EmpresaUsuario.DoesNotExist:
+                return Producto.objects.none()
+        return queryset
 
 class EmpresaViewSet(viewsets.ModelViewSet):
     queryset = Empresa.objects.filter(activa=True)

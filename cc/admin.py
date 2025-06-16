@@ -1,6 +1,42 @@
 from django.contrib import admin
 from django.utils.html import format_html
-from .models import *
+from .models import (
+    Categoria, Icono, RedSocial, Empresa, 
+    EmpresaRedSocial, Producto, CaracteristicaProducto,
+    Servicio, Testimonio, Equipo, Noticia, 
+    MensajeContacto, Socio, JobApplication, EmpresaUsuario
+)
+from django.contrib.auth.admin import UserAdmin
+from django.contrib.auth.models import User
+
+class EmpresaUsuarioInline(admin.StackedInline):
+    model = EmpresaUsuario
+    can_delete = True
+    verbose_name_plural = 'Empresa asignada'
+
+class CustomUserAdmin(UserAdmin):
+    inlines = (EmpresaUsuarioInline,)
+    list_display = ('username', 'email', 'first_name', 'last_name', 'is_staff', 'get_empresa')
+    
+    def get_empresa(self, obj):
+        try:
+            return obj.empresausuario.empresa.nombre
+        except:
+            return '-'
+    get_empresa.short_description = 'Empresa'
+
+# Re-register UserAdmin
+admin.site.unregister(User)
+admin.site.register(User, CustomUserAdmin)
+
+@admin.register(EmpresaUsuario)
+class EmpresaUsuarioAdmin(admin.ModelAdmin):
+    list_display = ['usuario', 'empresa', 'fecha_asignacion']
+    list_filter = ['empresa', 'fecha_asignacion']
+    search_fields = ['usuario__username', 'usuario__email', 'empresa__nombre']
+    raw_id_fields = ['usuario', 'empresa']
+    date_hierarchy = 'fecha_asignacion'
+
 class CaracteristicaProductoInline(admin.TabularInline):
     model = CaracteristicaProducto
     extra = 1

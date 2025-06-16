@@ -61,6 +61,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'django_filters',
     'cloudinary',
+    'rest_framework_simplejwt',
 ]
 CORS_ORIGIN_ALLOW_ALL = True
 REST_FRAMEWORK = {
@@ -69,7 +70,10 @@ REST_FRAMEWORK = {
         'rest_framework.filters.SearchFilter',
     ],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 50
+    'PAGE_SIZE': 50,
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
 }
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOWED_ALL_ORIGINS = True
@@ -166,3 +170,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 X_FRAME_OPTIONS = 'SAMEORIGIN'
 SILENCED_SYSTEM_CHECKS = ['security.W019']
+
+from datetime import timedelta
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
+}

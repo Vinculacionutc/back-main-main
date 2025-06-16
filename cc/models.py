@@ -1,6 +1,7 @@
 from django.db import models
 from cloudinary.models import CloudinaryField
 from django.core.exceptions import ValidationError
+from django.contrib.auth.models import User
 
 # Create your models here.
 # models.py
@@ -198,3 +199,25 @@ class JobApplication(models.Model):
             # Add fl_attachment to force download
             return self.cv.url.replace('/upload/', '/upload/fl_attachment/')
         return None
+
+class EmpresaUsuario(models.Model):
+    usuario = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name='Usuario')
+    empresa = models.OneToOneField(Empresa, on_delete=models.CASCADE, verbose_name='Empresa')
+    fecha_asignacion = models.DateTimeField(auto_now_add=True, verbose_name='Fecha de asignación')
+
+    class Meta:
+        verbose_name = 'Usuario de Empresa'
+        verbose_name_plural = 'Usuarios de Empresas'
+        ordering = ['-fecha_asignacion']
+
+    def __str__(self):
+        return f"{self.usuario.username} - {self.empresa.nombre}"
+
+    def clean(self):
+        # Validar que no exista otro usuario para la misma empresa
+        if EmpresaUsuario.objects.exclude(id=self.id).filter(empresa=self.empresa).exists():
+            raise ValidationError('Esta empresa ya tiene un usuario asignado.')
+        
+        # Validar que el usuario no esté asignado a otra empresa
+        if EmpresaUsuario.objects.exclude(id=self.id).filter(usuario=self.usuario).exists():
+            raise ValidationError('Este usuario ya está asignado a otra empresa.')
