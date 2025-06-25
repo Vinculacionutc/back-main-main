@@ -116,16 +116,12 @@ WSGI_APPLICATION = 'back.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.oracle',
-        'NAME': 'vinculacion_high',  # Nombre del servicio (generalmente termina en _high, _medium, o _low)
-        'USER': 'ADMIN',
-        'PASSWORD': 'Cappa100..$$',
-        'OPTIONS': {
-            
-            'config_dir': str(BASE_DIR / 'back' / 'wallet'),
-            'wallet_location': str(BASE_DIR / 'back' / 'wallet'),
-            'wallet_password': 'Cappa100..$$'
-        }
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'new',
+        'USER': 'root',
+        'PASSWORD': 'Cappa100..',
+        'HOST': '68.233.122.231',  # O la IP del VPS si no usas túnel SSH
+        'PORT': '3306',       # Usa 3307 si usas túnel SSH, sino 3306
     }
 }
 
