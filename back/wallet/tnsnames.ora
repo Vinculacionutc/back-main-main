@@ -1,0 +1,12 @@
+vinculacion_high = (description= (retry_count=20)(retry_delay=3)(address=(protocol=tcps)(port=1522)(host=adb.ca-montreal-1.oraclecloud.com))(connect_data=(service_name=gbb4e018fa688ab_vinculacion_high.adb.oraclecloud.com))(security=(ssl_server_dn_match=yes)))
+
+vinculacion_low = (description= (retry_count=20)(retry_delay=3)(address=(protocol=tcps)(port=1522)(host=adb.ca-montreal-1.oraclecloud.com))(connect_data=(service_name=gbb4e018fa688ab_vinculacion_low.adb.oraclecloud.com))(security=(ssl_server_dn_match=yes)))
+
+vinculacion_medium = (description= (retry_count=20)(retry_delay=3)(address=(protocol=tcps)(port=1522)(host=adb.ca-montreal-1.oraclecloud.com))(connect_data=(service_name=gbb4e018fa688ab_vinculacion_medium.adb.oraclecloud.com))(security=(ssl_server_dn_match=yes)))
+
+vinculacion_tp = (description= (retry_count=20)(retry_delay=3)(address=(protocol=tcps)(port=1522)(host=adb.ca-montreal-1.oraclecloud.com))(connect_data=(service_name=gbb4e018fa688ab_vinculacion_tp.adb.oraclecloud.com))(security=(ssl_server_dn_match=yes)))
+
+vinculacion_tpurgent = (description= (retry_count=20)(retry_delay=3)(address=(protocol=tcps)(port=1522)(host=adb.ca-montreal-1.oraclecloud.com))(connect_data=(service_name=gbb4e018fa688ab_vinculacion_tpurgent.adb.oraclecloud.com))(security=(ssl_server_dn_match=yes)))
+
+
+

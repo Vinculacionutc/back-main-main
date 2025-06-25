@@ -116,13 +116,16 @@ WSGI_APPLICATION = 'back.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'nuevaa',
-        'USER': 'admin',
-        'PASSWORD': 'Cappa100..',
-        'HOST': 'database-1.c3a00a6e07i7.us-east-2.rds.amazonaws.com',
-        'PORT': '3306',
-        
+        'ENGINE': 'django.db.backends.oracle',
+        'NAME': 'vinculacion_high',  # Nombre del servicio (generalmente termina en _high, _medium, o _low)
+        'USER': 'ADMIN',
+        'PASSWORD': 'Cappa100..$$',
+        'OPTIONS': {
+            
+            'config_dir': str(BASE_DIR / 'back' / 'wallet'),
+            'wallet_location': str(BASE_DIR / 'back' / 'wallet'),
+            'wallet_password': 'Cappa100..$$'
+        }
     }
 }
 
