@@ -35,7 +35,7 @@ class Empresa(models.Model):
     descripcion = models.TextField()
     telefono = models.CharField(max_length=20)
     correo = models.EmailField(blank=True, null=True)
-    sitio_web = models.URLField(blank=True, null=True)
+    sitio_web = models.URLField(blank=True, null=True, verbose_name='Red Social')
     direccion = models.CharField(max_length=200)
     fecha_registro = models.DateTimeField(auto_now_add=True)
     activa = models.BooleanField(default=True)

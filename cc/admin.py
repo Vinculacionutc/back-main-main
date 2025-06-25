@@ -1,9 +1,9 @@
 from django.contrib import admin
 from django.utils.html import format_html
 from .models import (
-    Categoria, Icono, RedSocial, Empresa, 
+    Categoria, Empresa, 
     EmpresaRedSocial, Producto, CaracteristicaProducto,
-    Servicio, Testimonio, Equipo, Noticia, 
+     Testimonio, Noticia, 
     MensajeContacto, Socio, JobApplication, EmpresaUsuario
 )
 from django.contrib.auth.admin import UserAdmin
@@ -182,12 +182,7 @@ class ProductoAdmin(admin.ModelAdmin):
         return "Sin imagen"
     mostrar_imagen.short_description = 'Vista previa de la imagen'
 
-@admin.register(Servicio)
-class ServicioAdmin(admin.ModelAdmin):
-    list_display = ['titulo', 'categoria', 'icono', 'activo']
-    list_filter = ['categoria', 'activo']
-    search_fields = ['titulo', 'descripcion']
-    list_editable = ['activo']
+
 
 @admin.register(Testimonio)
 class TestimonioAdmin(admin.ModelAdmin):
@@ -242,25 +237,7 @@ class NoticiaAdmin(admin.ModelAdmin):
         return "Sin foto"
     mostrar_foto.short_description = 'Vista previa de la foto'
 
-@admin.register(Equipo)
-class EquipoAdmin(admin.ModelAdmin):
-    list_display = ['nombre', 'posicion', 'mostrar_imagen']
-    search_fields = ['nombre', 'posicion', 'descripcion']
-    readonly_fields = ['mostrar_imagen']
-    fieldsets = (
-        ('Información Personal', {
-            'fields': ('nombre', 'posicion', 'descripcion')
-        }),
-        ('Imagen', {
-            'fields': ('imagen', 'mostrar_imagen')
-        }),
-    )
 
-    def mostrar_imagen(self, obj):
-        if obj.imagen:
-            return format_html('<img src="{}" style="max-height: 100px;"/>', obj.imagen.url)
-        return "Sin imagen"
-    mostrar_imagen.short_description = 'Vista previa de la imagen'
 
 @admin.register(Socio)
 class SocioAdmin(admin.ModelAdmin):
@@ -295,8 +272,8 @@ class SocioAdmin(admin.ModelAdmin):
         return self.readonly_fields
 
 # Registrar los modelos restantes
-admin.site.register(Icono)
-admin.site.register(RedSocial)
+
+
 
 @admin.register(JobApplication)
 class JobApplicationAdmin(admin.ModelAdmin):
