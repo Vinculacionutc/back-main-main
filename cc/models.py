@@ -40,6 +40,11 @@ class Empresa(models.Model):
     fecha_registro = models.DateTimeField(auto_now_add=True)
     activa = models.BooleanField(default=True)
     logo = CloudinaryField('logo', blank=True, null=True)
+    facebook = models.CharField(max_length=100, blank=True, null=True, default="https://www.facebook.com/")
+    twitter = models.CharField(max_length=100, blank=True, null=True, default="https://www.twitter.com/")
+    instagram = models.CharField(max_length=100, blank=True, null=True, default="https://www.instagram.com/")
+    tiktok = models.CharField(max_length=100, blank=True, null=True, default="https://www.tiktok.com/")
+    linkedin = models.CharField(max_length=100, blank=True, null=True, default="https://www.linkedin.com/")
 
     def __str__(self):
         return self.nombre
