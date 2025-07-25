@@ -72,6 +72,9 @@ class EmpresaAdmin(admin.ModelAdmin):
         ('Estado', {
             'fields': ('activa', 'fecha_registro')
         }),
+        ('Redes Sociales', {
+            'fields': ('facebook', 'twitter', 'instagram', 'tiktok', 'linkedin')
+        }),
     )
 
     def get_queryset(self, request):
