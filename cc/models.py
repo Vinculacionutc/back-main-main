@@ -30,6 +30,7 @@ class RedSocial(models.Model):
         return self.nombre
 
 class Empresa(models.Model):
+    ruc = models.CharField(max_length=13, blank=True, null=True, default="1234567890001")
     nombre = models.CharField(max_length=100)
     categoria = models.ForeignKey(Categoria, on_delete=models.PROTECT)
     descripcion = models.TextField()
