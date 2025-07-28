@@ -57,14 +57,14 @@ class CategoriaAdmin(admin.ModelAdmin):
 
 @admin.register(Empresa)
 class EmpresaAdmin(admin.ModelAdmin):
-    list_display = ['nombre', 'categoria', 'telefono', 'correo', 'activa', 'mostrar_logo']
+    list_display = ['ruc', 'nombre', 'categoria', 'telefono', 'correo', 'activa', 'mostrar_logo']
     list_filter = ['categoria', 'activa', 'fecha_registro']
-    search_fields = ['nombre', 'descripcion']
+    search_fields = ['ruc', 'nombre', 'descripcion']
     readonly_fields = ['fecha_registro', 'mostrar_logo']
     inlines = [EmpresaRedSocialInline]
     fieldsets = (
         ('Información Principal', {
-            'fields': ('nombre', 'categoria', 'descripcion', 'logo', 'mostrar_logo')
+            'fields': ('ruc', 'nombre', 'categoria', 'descripcion', 'logo', 'mostrar_logo')
         }),
         ('Contacto', {
             'fields': ('telefono', 'correo', 'sitio_web', 'direccion')
