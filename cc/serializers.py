@@ -113,7 +113,7 @@ class SocioSerializer(serializers.ModelSerializer):
     class Meta:
         model = Socio
         fields = [
-            'id', 'nombre', 'apellido', 'email', 'telefono',
+            'id', 'nombre', 'apellido', 'cedula', 'email', 'telefono',
             'empresa', 'cargo', 'direccion', 'ciudad',
             'descripcion_empresa', 'motivo', 'fecha_solicitud', 'estado'
         ]
@@ -122,6 +122,11 @@ class SocioSerializer(serializers.ModelSerializer):
     def validate_email(self, value):
         if Socio.objects.filter(email=value).exists():
             raise serializers.ValidationError("Ya existe una solicitud con este correo electrónico.")
+        return value
+    
+    def validate_cedula(self, value):
+        if value and Socio.objects.filter(cedula=value).exists():
+            raise serializers.ValidationError("Ya existe una solicitud con esta cédula.")
         return value
 
 class JobApplicationSerializer(serializers.ModelSerializer):

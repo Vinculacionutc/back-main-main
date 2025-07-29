@@ -39,6 +39,8 @@ class CategoriaViewSet(viewsets.ModelViewSet):
 class SocioViewSet(viewsets.ModelViewSet):
     queryset = Socio.objects.all()
     serializer_class = SocioSerializer
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['nombre', 'apellido', 'cedula', 'email', 'empresa']
 
 class RedSocialViewSet(viewsets.ModelViewSet):
     queryset = RedSocial.objects.all()

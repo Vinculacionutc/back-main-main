@@ -244,15 +244,15 @@ class NoticiaAdmin(admin.ModelAdmin):
 
 @admin.register(Socio)
 class SocioAdmin(admin.ModelAdmin):
-    list_display = ['nombre', 'apellido', 'empresa', 'email', 'telefono', 'estado', 'fecha_solicitud']
+    list_display = ['nombre', 'apellido', 'cedula', 'empresa', 'email', 'telefono', 'estado', 'fecha_solicitud']
     list_filter = ['estado', 'fecha_solicitud', 'ciudad']
-    search_fields = ['nombre', 'apellido', 'email', 'empresa']
+    search_fields = ['nombre', 'apellido', 'cedula', 'email', 'empresa']
     readonly_fields = ['fecha_solicitud']
     date_hierarchy = 'fecha_solicitud'
     
     fieldsets = (
         ('Información Personal', {
-            'fields': (('nombre', 'apellido'), 'email', 'telefono')
+            'fields': (('nombre', 'apellido'), 'cedula', 'email', 'telefono')
         }),
         ('Información Empresarial', {
             'fields': ('empresa', 'cargo', 'descripcion_empresa')
