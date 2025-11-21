@@ -123,10 +123,8 @@ DATABASES = {
         'HOST': 'mysql-1ff68617-murdcofh-bf04.k.aivencloud.com',  # O la IP del VPS si no usas túnel SSH
         'PORT': '25299', 
         'OPTIONS': {
-            'ssl': {
-                'ca': '/ruta/al/archivo/ca.pem',   # Archivo CA descargado desde Aiven
-            }
-        }# Usa 3307 si usas túnel SSH, sino 3306
+    'ssl': {'ssl-mode': 'REQUIRED'}
+}
     }
 }
 
