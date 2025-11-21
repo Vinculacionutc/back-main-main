@@ -118,10 +118,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'new',
-        'USER': 'root',
-        'PASSWORD': 'Cappa100..',
-        'HOST': '68.233.122.231',  # O la IP del VPS si no usas túnel SSH
-        'PORT': '3306',       # Usa 3307 si usas túnel SSH, sino 3306
+        'USER': 'avnadmin',
+        'PASSWORD': 'AVNS_sLqNHQeFddyYGxyijky',
+        'HOST': 'mysql-1ff68617-murdcofh-bf04.k.aivencloud.com',  # O la IP del VPS si no usas túnel SSH
+        'PORT': '25299',       # Usa 3307 si usas túnel SSH, sino 3306
     }
 }
 
