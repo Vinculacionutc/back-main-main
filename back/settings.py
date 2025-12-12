@@ -114,21 +114,7 @@ WSGI_APPLICATION = 'back.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 #
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'new',
-        'USER': 'avnadmin',
-        'PASSWORD': 'AVNS_sLqNHQeFddyYGxyijky',
-        'HOST': 'mysql-1ff68617-murdcofh-bf04.k.aivencloud.com',  # O la IP del VPS si no usas túnel SSH
-        'PORT': '25299', 
-        'OPTIONS': {
-            'ssl': {
-                'ca': 'back/ca.pem',   # Archivo CA descargado desde Aiven
-            }
-        }
-    }
-}
+
 
 
 # Password validation
