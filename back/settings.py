@@ -115,9 +115,9 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'new',
         'USER': 'avnadmin',
-        'PASSWORD': 'AVNS_sLqNHQeFddyYGxyijky',
-        'HOST': 'mysql-1ff68617-murdcofh-bf04.k.aivencloud.com',  # O la IP del VPS si no usas túnel SSH
-        'PORT': '25299', 
+        'PASSWORD': 'AVNS_2nsYTBq6uz2Z2LCK8Xu',
+        'HOST': 'mysql-16a11784-cdf900q-bb9e.b.aivencloud.com',  # O la IP del VPS si no usas túnel SSH
+        'PORT': '15684', 
         'OPTIONS': {
             'ssl': {
                 'ca': 'back/ca.pem',   # Archivo CA descargado desde Aiven
