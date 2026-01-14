@@ -113,7 +113,7 @@ WSGI_APPLICATION = 'back.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'new',
+        'NAME': 'defaultdb',
         'USER': 'avnadmin',
         'PASSWORD': 'AVNS_2nsYTBq6uz2Z2LCK8Xu',
         'HOST': 'mysql-16a11784-cdf900q-bb9e.b.aivencloud.com',  # O la IP del VPS si no usas túnel SSH
